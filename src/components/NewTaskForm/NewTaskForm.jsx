@@ -1,31 +1,64 @@
-import PropTypes from 'prop-types'
-import { useState } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 
-function NewTaskForm(props) {
-  const { addTodo } = props
+import { TodosContext } from '../../context/TodosContext'
+
+function NewTaskForm() {
+  const { addTodoHandler } = useContext(TodosContext)
   const [text, setText] = useState('')
+  const [timer, setTimer] = useState({ minutes: '', seconds: '' })
+  const textInputRef = useRef(null)
 
   const onSubmitHandler = (event) => {
     event.preventDefault()
-    addTodo(text)
+    if (text.trim() === '') {
+      return // Предотвращаем добавление пустого задания
+    }
+    const minutes = parseInt(timer.minutes, 10) || 0
+    const seconds = parseInt(timer.seconds, 10) || 0
+    const totalSeconds = minutes * 60 + seconds
+    addTodoHandler({
+      text,
+      timer: { minutes, seconds, totalSeconds },
+    })
     setText('')
+    setTimer({ minutes: '', seconds: '' })
+    textInputRef.current.focus() // Ставим фокус на поле ввода текста
+  }
+
+  const handleTimeChange = (event) => {
+    const { name, value } = event.target
+    let newValue = value.replace(/\D/, '')
+    if (newValue > 59) newValue = 59
+    setTimer({ ...timer, [name]: newValue })
   }
 
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form onSubmit={onSubmitHandler} className="new-todo-form">
+      <button type="submit" hidden aria-hidden />
       <input
+        ref={textInputRef}
         className="new-todo"
         placeholder="What needs to be done?"
         value={text}
         onChange={(event) => setText(event.target.value)}
         autoFocus
       />
+      <input
+        className="new-todo-form__timer"
+        name="minutes"
+        placeholder="Min"
+        value={timer.minutes}
+        onChange={handleTimeChange}
+      />
+      <input
+        className="new-todo-form__timer"
+        name="seconds"
+        placeholder="Sec"
+        value={timer.seconds}
+        onChange={handleTimeChange}
+      />
     </form>
   )
-}
-
-NewTaskForm.propTypes = {
-  addTodo: PropTypes.func.isRequired,
 }
 
 export default NewTaskForm

@@ -1,49 +1,42 @@
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
 
-function Footer(props) {
+import { TodosContext } from '../../context/TodosContext'
+
+function Footer() {
   const {
-    deleteCompletedTodos,
-    activeTodos,
-    showAll,
-    showActive,
-    showCompleted,
-    currentFilter, // Получаем текущий фильтр из пропсов
-  } = props
+    deleteCompletedTodosHandler,
+    activeTodosCount,
+    showAllHandler,
+    showActiveHandler,
+    showCompletedHandler,
+    filter,
+  } = useContext(TodosContext)
 
   return (
     <footer className="footer">
-      <span className="todo-count">{activeTodos} items left</span>
+      <span className="todo-count">{activeTodosCount} items left</span>
       <ul className="filters">
         <li>
-          <button className={currentFilter === 'All' ? 'selected' : ''} onClick={showAll}>
+          <button className={filter === 'All' ? 'selected' : ''} onClick={showAllHandler}>
             All
           </button>
         </li>
         <li>
-          <button className={currentFilter === 'Active' ? 'selected' : ''} onClick={showActive}>
+          <button className={filter === 'Active' ? 'selected' : ''} onClick={showActiveHandler}>
             Active
           </button>
         </li>
         <li>
-          <button className={currentFilter === 'Completed' ? 'selected' : ''} onClick={showCompleted}>
+          <button className={filter === 'Completed' ? 'selected' : ''} onClick={showCompletedHandler}>
             Completed
           </button>
         </li>
       </ul>
-      <button className="clear-completed" onClick={deleteCompletedTodos}>
+      <button className="clear-completed" onClick={deleteCompletedTodosHandler}>
         Clear completed
       </button>
     </footer>
   )
-}
-
-Footer.propTypes = {
-  deleteCompletedTodos: PropTypes.func.isRequired,
-  activeTodos: PropTypes.number.isRequired,
-  showAll: PropTypes.func.isRequired,
-  showActive: PropTypes.func.isRequired,
-  showCompleted: PropTypes.func.isRequired,
-  currentFilter: PropTypes.string.isRequired,
 }
 
 export default Footer

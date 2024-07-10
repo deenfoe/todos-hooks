@@ -1,37 +1,26 @@
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
 
 import Task from '../Task/Task'
+import { TodosContext } from '../../context/TodosContext'
 
-function TaskList(props) {
-  const { todos, deleteTodo, toggleTodo, toggleTodoEdit } = props
+function TaskList() {
+  const { filteredTodos, toggleTodoEditHandler, deleteTodoHandler, toggleTodoHandler, updateTodoTimeHandler } =
+    useContext(TodosContext)
 
   return (
     <ul className="todo-list">
-      {todos.map((todo) => (
+      {filteredTodos.map((todo) => (
         <Task
           key={todo.id}
           todo={todo}
-          toggleTodoEdit={toggleTodoEdit}
-          deleteTodo={deleteTodo}
-          toggleTodo={toggleTodo}
+          toggleTodoEdit={toggleTodoEditHandler}
+          deleteTodo={deleteTodoHandler}
+          toggleTodo={toggleTodoHandler}
+          updateTodoTime={updateTodoTimeHandler}
         />
       ))}
     </ul>
   )
-}
-
-TaskList.propTypes = {
-  todos: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      created: PropTypes.instanceOf(Date).isRequired,
-      isCompleted: PropTypes.bool.isRequired,
-    })
-  ).isRequired,
-  deleteTodo: PropTypes.func.isRequired,
-  toggleTodo: PropTypes.func.isRequired,
-  toggleTodoEdit: PropTypes.func.isRequired,
 }
 
 export default TaskList
