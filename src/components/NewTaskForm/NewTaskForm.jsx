@@ -2,6 +2,8 @@ import React, { useState, useContext, useRef } from 'react'
 
 import { TodosContext } from '../../context/TodosContext'
 
+import './NewTaskForm.css'
+
 function NewTaskForm() {
   const { addTodoHandler } = useContext(TodosContext)
   const [text, setText] = useState('')

@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 
 import { TodosContext } from '../../context/TodosContext'
 
+import './Footer.css'
+
 function Footer() {
   const {
     deleteCompletedTodosHandler,

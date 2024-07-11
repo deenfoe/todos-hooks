@@ -3,6 +3,8 @@ import React, { useContext } from 'react'
 import Task from '../Task/Task'
 import { TodosContext } from '../../context/TodosContext'
 
+import './TaskList.css'
+
 function TaskList() {
   const { filteredTodos, toggleTodoEditHandler, deleteTodoHandler, toggleTodoHandler, updateTodoTimeHandler } =
     useContext(TodosContext)

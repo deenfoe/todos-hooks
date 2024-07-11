@@ -4,6 +4,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
 import { TodosContext } from '../../context/TodosContext'
+import './Task.css'
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60)
@@ -56,7 +57,7 @@ function Task(props) {
         <label>
           <span className="title">{todo.text}</span>
           <span className="description">
-            <div className="test">
+            <div className="timer">
               <button
                 className="icon icon-play"
                 onClick={() => {
